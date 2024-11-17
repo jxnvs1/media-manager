@@ -31,7 +31,7 @@ check_requirements() {
 initialize_db() {
     sqlite3 "$DB_FILE" <<EOF
 CREATE TABLE IF NOT EXISTS media (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     type TEXT NOT NULL,
     name TEXT NOT NULL,
     status INTEGER NOT NULL,
@@ -53,7 +53,20 @@ generate_unique_id() {
 
 # Função para adicionar mídias
 add_media() {
-    local type=$1
+    local type
+    # Solicita o tipo da mídia antes de tudo
+    echo "Escolha o tipo de mídia:"
+    echo "1 - Filme"
+    echo "2 - Série"
+    echo "3 - Anime"
+    read -p "Escolha uma opção (1, 2 ou 3): " type_option
+
+    case $type_option in
+        1) type="Filme" ;;
+        2) type="Série" ;;
+        3) type="Anime" ;;
+        *) echo "Opção inválida!"; return ;;
+    esac
 
     # Solicita os nomes das mídias
     read -e -p "Digite os nomes das mídias, separados por ponto e vírgula (;): " names_input
