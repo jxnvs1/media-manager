@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Media Manager
+Icon=/usr/share/pixmaps/media-logo.png
+Exec=/usr/local/bin/media_manager.sh
+Type=Application
+StartupNotify=true
+Terminal=true
+Categories=Utility;

@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# Verifica se o script está sendo executado como root
+if [[ "$EUID" -ne 0 ]]; then
+    echo "Este script requer permissões de root. Use sudo para executar."
+    exit 1
+fi
+
+# Função para copiar arquivos com verificação de sucesso
+copiar_arquivo() {
+    local origem="$1"
+    local destino="$2"
+    local mensagem="$3"
+
+    if cp "$origem" "$destino"; then
+        echo "$mensagem"
+    else
+        echo "Erro ao copiar $origem para $destino"
+        exit 1
+    fi
+}
+
+# Copia o programa para /usr/local/bin/
+copiar_arquivo "media_manager.sh" "/usr/local/bin/" "Cópia do programa concluída..."
+chmod +x /usr/local/bin/media_manager.sh
+
+# Copia o ícone para /usr/share/pixmaps/
+copiar_arquivo "media-logo.png" "/usr/share/pixmaps/" "Cópia do ícone concluída..."
+
+# Copia o lançador para /usr/share/applications/
+copiar_arquivo "media_manager.desktop" "/usr/share/applications/" "Lançador instalado..."
+chmod +x /usr/share/applications/media_manager.desktop
+
+echo "Instalação concluída com sucesso!"
